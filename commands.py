@@ -14,7 +14,7 @@ from subprocess import Popen
 access_token='1b3c9e5e3dca7a'
 owm=pyowm.OWM("d09e5ef276efa2a6957ff7cefe29c42e")
 
-#DATABASE STARTS
+#DATABASE
 greetings = ['hey there', 'hello', 'hi', 'hai', 'hey!', 'hey']
 question = ['how are you?', 'how are you doing?']
 responses = ['i\'m Okay', "i\'m fine","i am doing good"]
@@ -62,28 +62,19 @@ def doProcess(score=[]):
     elif mAx==score[8] :
         print("RUN YT")
     elif mAx==score[9] :
-        #random_reply = random.choice(responses)
         random_reply="Bye. Hope to talk to you soon again"
         Popen("python play.py 1 "+random_reply,shell=False)
         sys.exit(0)
         return
     elif mAx==score[10] :
-        #observation_list=owm.weather_around_coords(lat=LAT,lon=LON)
         handler=ipinfo.getHandler(access_token=access_token)
         ip_address=requests.get('https://api.ipify.org/?format=json').json()['ip']
         details=handler.getDetails(ip_address=ip_address)
         print(details.all)
-        #location=''+details.city+', '+details.country
         LAT = float(""+str(details.latitude))
         LON = float(""+str(details.longitude))
-        #print(LAT)
-        #print(LON)
-        #observation=owm.weather_at_place(location)
         observation=owm.weather_at_coords(lat=LAT,lon=LON)
         w=observation.get_weather()
-        #print(w.get_wind())
-        #print(w.get_humidity())
-        #print(w.get_temperature('celsius'))
         random_reply0="Wind Speed "+str(w.get_wind().get("speed"))+"metre per second"
         random_reply1="Humidity " + str(w.get_humidity())+" percentage"
         random_reply2="Temperature " + str(w.get_temperature('celsius').get('temp'))+" degree celsius"
